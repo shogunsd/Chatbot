@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat en ligne</title>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>Chat en direct</h1>
+    <input id="message" placeholder="Tapez un message">
+    <button onclick="sendMessage()">Envoyer</button>
+    <ul id="messages"></ul>
+
+    <script>
+        var socket = io();
+        socket.on('message', function(msg){
+            var li = document.createElement("li");
+            li.textContent = msg;
+            document.getElementById("messages").appendChild(li);
+        });
+
+        function sendMessage(){
+            var msg = document.getElementById("message").value;
+            socket.send(msg);
+            document.getElementById("message").value = "";
+        }
+    </script>
+</body>
+</html>
